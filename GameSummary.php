@@ -29,6 +29,10 @@
 include('questions.php');
 session_start();
 
+/*
+Depending on the user's choice to whether play a new game in the existing session
+or Start a new round of games, appropriate page is called.
+*/
 if(isset($_POST['playagain'])){
   header('location: TheGame.php?qs=0');
   exit;
@@ -44,6 +48,8 @@ echo "<h1> These are your wins & losses </h1>";
 echo "<p> You can play a new game in this round and build your scores or start a new round altogether! </p>";
 $Avg = 0;
 $total = 0;
+// Average calculation of every game played in that round.
+// Cookies are used to keep track of all the scores :D
 for($i=1; $i<=count($_SESSION['Games']); $i++){
 $total = $_COOKIE[$i] + $total;
 $Avg = $total/$i;
