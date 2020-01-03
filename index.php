@@ -5,7 +5,6 @@ Hello!!! Thanks so much for bearing with me through this project :D
 
 I have added a couple extra features like calculating average, etc.
 Let me take you through the logic and some variable definitions.
-
 Variable and function definitions:
 
 I have used objects, a custom data type, which stores all the details of an
