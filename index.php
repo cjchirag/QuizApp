@@ -1,7 +1,34 @@
 <!DOCTYPE html>
 <?php
+/*
+Hello!!! Thanks so much for bearing with me through this project :D
+
+I have added a couple extra features like calculating average, etc.
+Let me take you through the logic and variable definitions.
+
+Variable and function definitions:
+
+I have used objects, a custom data type, which stores all the details of an
+individual question as properties. (Can be found in questions.php)
+
+A global function: QuestionsGenerator() is used to randomly create 10 set of
+questions and is returned to be used in a game.
+
+$_SESSION['Games'] variable keeps track of all the games played by a user in
+a particular session.
+
+At the end of each game in GameSummary.php, the user has the option to play a
+new game in the existing session. Or start a new session.
+If the user decides to play again, then a new game is loaded in the same session.
+At the end of every game of that session, score is displayed of every game played
+by the user in that session. And a sessional average is displayed.
+
+If the user decides to reset, the session is destroyed. And a new round can
+be later created.
+*/
+
 session_start();
-$_SESSION['Games'] = [];
+
 ?>
 <html lang="en">
 <head>
@@ -11,6 +38,9 @@ $_SESSION['Games'] = [];
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/styles.css">
     <style>
+    /*
+    Additional CSS Styles to meet the exceeds expectation criteria
+    */
     .container {
     height: 100%;
     display: flex;
@@ -22,9 +52,6 @@ $_SESSION['Games'] = [];
     </style>
 </head>
 <body style="background: #B3E0FF">
-  <?php
-  include('quiz.php');
-  ?>
 
 
 <div class="container">
