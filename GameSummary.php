@@ -1,3 +1,15 @@
+<?php
+/*
+Success Criteria:
+1. This page displays the score of the latest game played by the user.
+Final score displayed
+2. History of scores played by the user in that session are displayed.
+3. Average of all the scores in that session are displayed.
+4. The user may choose to start the quiz again in that current round of games
+5. An option to destory a session and start a new one.
+6. Buttons call the appropriate pages.
+*/
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +37,9 @@
     </style>
 </head>
 <body style="background: #004445">
+
+
+
 <?php
 include('questions.php');
 session_start();
@@ -38,6 +53,10 @@ if(isset($_POST['playagain'])){
   exit;
 }
 if(isset($_POST['destroyround'])){
+  /*
+  This session is destroyed and the user has the chance to start a new round
+  of games.
+  */
   session_destroy();
   header('location: index.php');
   exit;
@@ -45,6 +64,13 @@ if(isset($_POST['destroyround'])){
 
 echo "<div class='summary_container'>";
 echo "<h1> These are your wins & losses </h1>";
+// To display the score of the latest game.
+// Or display an error message. (If the user directly types to the GameSummary.page in the ur;)
+if (isset($_SESSION['Games'])) {
+echo "<h1 style='color: #6FB98F'> In this game you scored " . $_COOKIE[count($_SESSION['Games'])]  .  " </h1>";
+} else {
+  echo "<h1 style='color: #6FB98F'> You need to play at least one game!</h1>";
+}
 echo "<p> You can play a new game in this round and build your scores or start a new round altogether! </p>";
 $Avg = 0;
 $total = 0;
@@ -55,6 +81,7 @@ $total = $_COOKIE[$i] + $total;
 $Avg = $total/$i;
 }
 echo "<p> Your sessional average is ". $Avg ." </p>";
+// To display every score in this existing session.
 for($i=1; $i<=count($_SESSION['Games']); $i++){
 echo "<p> In your game $i, you scored a " . $_COOKIE[$i] . " </p>";
 }

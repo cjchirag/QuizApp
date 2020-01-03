@@ -1,4 +1,23 @@
+<?php
+/*
 
+Success Criteria:
+1. Questions are dynamically generated. The numbers of each question are
+totally random without the use of a static question bank.
+2. A session variable keeps track of the score which is later then stored in a cookie for persistence :D
+3. A session variable keeps track of the message to be displayed for the user.
+Toasts are displayed for correct and incorrect answers.
+4. A function is used to check the users responses every time the user selects an option.
+Buttons are used.
+App works as expected when buttons are pressed
+(e.g. when a Submit button is pressed the provided answer is being evaluated)
+5. Code design:
+-> Project does not use JavaScript
+-> A non-white background color is used
+->Contrasting color has been used for the quiz elements.
+->All the elements are still easily readable after the colors are added
+*/
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +29,7 @@
     <style>
     .btn {
     background-color: #2c7873;
-    color: black;
+    color: white;
     border: 5px solid #2c7873;
   }
   p {
@@ -24,33 +43,22 @@
 <?php
 include('questions.php');
 session_start();
-$_SESSION['Response'] = '';
-// The session's response variable keeps track of all the messages to be displayed for the user.
+
+// This variable keeps track of all the messages to be displayed for the user.
 // Whether the user was right or wrong.
+$_SESSION['Response'] = '';
 
-// A Function to generate random Question objects
-// A question is an object created in questions.php.
-function QuestionsGenerator() {
-  $QuestionsForQuiz = [];
-  // A loop to create 10 random questions and return it.
-  for($i=0;$i<=9;$i++) {
-    $QuestionGenerate = new QuizQuestion();
-    $QuestionGenerate->AssignValues();
-    $QuestionsForQuiz[] = $QuestionGenerate;
-  }
-  return $QuestionsForQuiz;
-}
-
-// A function to check a user input. Whether its correct or not. Depending on the result a message is returned.
+// A function to check a user input. Whether they are correct or not. Depending on the result a message is returned.
 function AnswerResults($QuestionNumber) {
     //User response stored in a temporary variable.
     $UserInput = intval(filter_input(INPUT_POST, 'answer', FILTER_SANITIZE_STRING));
-    // A condition to check the values against correct responses array.
+
     /*
-   $_SESSION['CorrectResponses'] -> All the correct responses of every question is stored in a new session variable.
+   $_SESSION['CorrectResponses'] -> All the correct responses of every question is stored in a session variable.
    This variable is declared and all the data is stored when the first page is loaded: on line 73
     */
     // Scores are updated and a message is returned.
+    // A condition to check the values against correct responses array.
     if ($UserInput == $_SESSION['CorrectResponses'][$QuestionNumber]) {
         $_SESSION['score']++;
         unset($_POST['answer']);
@@ -63,15 +71,21 @@ function AnswerResults($QuestionNumber) {
 
 //Total number of questions are 10. Since index starts at 0, so 9.
 $total = 9;
+
 // qs tracks page number
 $qs = intval(filter_input(INPUT_GET, 'qs', FILTER_SANITIZE_NUMBER_INT));
+
+// For the first page:
 if($qs==0) {
   // CurrentGame variable keeps track of all the questions in a quiz game.
+  // The global function is called to generate 10 random questions.
   $_SESSION['CurrentGame'] = [];
+  //QuestionsGenerator() declared in questions.php.
   $QuestionSet = QuestionsGenerator();
   $_SESSION['CurrentGame'] = $QuestionSet;
 
-  /* $_SESSION['Games'] is updated to keep track of all the games
+  /*
+  $_SESSION['Games'] is declared to keep track of all the games
   played by a user in that session.
   */
   $_SESSION['Games'][] = $_SESSION['CurrentGame'];
@@ -80,9 +94,9 @@ if($qs==0) {
   $_SESSION['score'] = 0;
 
   /*
-  $_SESSION['CorrectResponses'] -> Is declared and stores all the correct answers
-  of all the questions in a game. Its like a good answer key in the correct order
-  of all the questions.
+  $_SESSION['CorrectResponses'] -> Is declared here and stores all the correct answers
+  of all the questions in a game. Its like an answer key which follows the same order
+  as the questions.
   */
   for($i=0;$i<=9;$i++) {
     $_SESSION['CorrectResponses'][$i] = $_SESSION['CurrentGame'][$i]->correctAnswer;
@@ -104,6 +118,8 @@ if($qs==0) {
 
 }
 
+// For all the pages except the first one.
+// Because in the first page, many variables are initialized.
 if($qs!=0) {
   /*
   This is executed when a button is pressed.
@@ -119,9 +135,9 @@ if($qs!=0) {
   }
   }
 }
+
 // When 10 questions are asked.. a cookie stores the score of that quiz.
 // And GameSummary page is loaded.
-
 if ($qs>$total) {
   // Each cookie stores the score of every quiz played by the user in that session.
   // Each cookie is stored in order of the game in ascending order.
