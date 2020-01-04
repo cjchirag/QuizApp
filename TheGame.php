@@ -60,7 +60,7 @@ function AnswerResults($QuestionNumber) {
     // Scores are updated and a message is returned.
     // A condition to check the values against correct responses array.
     if ($UserInput == $_SESSION['CorrectResponses'][$QuestionNumber]) {
-        $_SESSION['score']++;
+        $_SESSION['score'] = $_SESSION['score'] + 10;
         unset($_POST['answer']);
         return "That one was absolutely correct! You got this :D";
     } else {
@@ -162,7 +162,7 @@ echo "<p style='margin-top: 20px'> " . $_SESSION['Response'] . "</p>";
 echo "<p class='quiz'>What is " . $_SESSION['CurrentGame'][$qs]->leftAdder . " + " . $_SESSION['CurrentGame'][$qs]->rightAdder. "?</p>";
 echo '<form method="post" action="TheGame.php?qs='. ($qs+1) . '">';
 echo "      <input type='hidden' name='id' value='0' />";
-echo "      <input type='submit' class='btn' name='answer' value=" . $_SESSION['CurrentGame'][$qs]->TheValues[3] . ">";
+echo "      <input type='submit' class='btn' name='answer' value=" . $_SESSION['CurrentGame'][$qs]->TheValues[2] . ">";
 echo "      <input type='submit' class='btn' name='answer' value=" . $_SESSION['CurrentGame'][$qs]->TheValues[0] . ">";
 echo "      <input type='submit' class='btn' name='answer' value=" . $_SESSION['CurrentGame'][$qs]->TheValues[1] . ">";
 echo "      </form>";

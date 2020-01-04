@@ -42,7 +42,7 @@ class QuizQuestion {
           $this->TheValues[] = $this->secondIncorrectAnswer;
           $PossibleValues = $this->TheValues;
           for($i=mt_rand(0,2); $i<=2; $i++) {
-            if (i==2) {
+            if ($i==2) {
               $Swap = $PossibleValues[2];
               $PossibleValues[2] = $PossibleValues[0];
               $PossibleValues[0] = $Swap;

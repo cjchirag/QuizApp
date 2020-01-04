@@ -67,7 +67,7 @@ echo "<h1> These are your wins & losses </h1>";
 // To display the score of the latest game.
 // Or display an error message. (If the user directly types to the GameSummary.page in the ur;)
 if (isset($_SESSION['Games'])) {
-echo "<h1 style='color: #6FB98F'> In this game you scored " . $_COOKIE[count($_SESSION['Games'])]  .  " </h1>";
+echo "<h1 style='color: #6FB98F'> In this game you scored " . $_COOKIE[count($_SESSION['Games'])]  .  "% </h1>";
 } else {
   echo "<h1 style='color: #6FB98F'> You need to play at least one game!</h1>";
 }
@@ -80,10 +80,10 @@ for($i=1; $i<=count($_SESSION['Games']); $i++){
 $total = $_COOKIE[$i] + $total;
 $Avg = $total/$i;
 }
-echo "<p> Your sessional average is ". $Avg ." </p>";
+echo "<p> Your sessional average is ". $Avg ."% </p>";
 // To display every score in this existing session.
 for($i=1; $i<=count($_SESSION['Games']); $i++){
-echo "<p> In your game $i, you scored a " . $_COOKIE[$i] . " </p>";
+echo "<p> In your game $i, you scored a " . $_COOKIE[$i] . "% </p>";
 }
 echo "<form style='' method='post' action='GameSummary.php'>";
 echo "      <input type='hidden' name='id' value='0' />";
